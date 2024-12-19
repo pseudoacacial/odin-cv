@@ -23,12 +23,12 @@ const initialExperiences ={
 
 export const Education = () => {
 
-  const [experiences, setExperiences] = useState({[crypto.randomUUID()]: {...initialExperiences.education}})
+  const [experiences, setExperiences] = useState([{...initialExperiences.education}])
 
   console.log(experiences)
 
   const handleAdd = (e) => {
-    setExperiences({...experiences, [crypto.randomUUID()]: {...initialExperiences.education}})
+    setExperiences([...experiences, {...initialExperiences.education}])
     
   }
   const handleRemove = (e) => {
@@ -37,7 +37,7 @@ export const Education = () => {
     setExperiences(newExperiences)
   }
   const handleChange = (e) => {
-    const newExperiences = {...experiences}
+    const newExperiences = [...experiences]
     // if (!newExperiences[e.target.getAttribute('data-id')]) {
     //   newExperiences[e.target.getAttribute('data-id')]={};
     // }
@@ -51,8 +51,8 @@ export const Education = () => {
     <div className='education form'>
       <h2>Education</h2>
       <div className='experiences'>
-        {Object.keys(experiences).map(experience=> (
-          <Experience key={experience} id={experience} fields={experiences[experience]} handleChange={handleChange} handleRemove={handleRemove}></Experience>
+        {experiences.map((experience, id)=> (
+          <Experience key={id} id={id} fields={experience} handleChange={handleChange} handleRemove={handleRemove}></Experience>
         ))}
       </div>
       <button onClick={handleAdd}>add</button>
