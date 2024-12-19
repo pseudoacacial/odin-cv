@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Resume } from './components/Resume'
-import { Education }  from './components/Education'
+import { Section }  from './components/Section'
 import './styles/App.css'
 import React from 'react'
 
@@ -29,29 +29,27 @@ function App() {
     }
 
   }
-  
+  const [generalExperiences, setGeneralExperiences] = useState([{...initialExperiences.general}])
   const [educationExperiences, setEducationExperiences] = useState([{...initialExperiences.education}])
+  const [practicalExperiences, setPracticalExperiences] = useState([{...initialExperiences.practical}])
 
   const stateMap = {
-    // general: [generalExperiences, setGeneralExperiences],
+    general: {get: generalExperiences, set: setGeneralExperiences},
     education: {get: educationExperiences, set: setEducationExperiences},
-    // practical: [practicalExperiences, setPracticalExperiences]
+    practical: {get: practicalExperiences, set: setPracticalExperiences}
   }
   
-  const handleAdd = (e,type='education') => {
-    stateMap[type].set([...stateMap[type].get, {...initialExperiences.education}])
+  const handleAdd = (e,type) => {
+    stateMap[type].set([...stateMap[type].get, {...initialExperiences[type]}])
     
   }
-  const handleRemove = (e, type='education') => {
-    // const newExperiences = [...stateMap[type].get]
-    // delete newExperiences[e.target.parentElement.getAttribute('data-id')]
+  const handleRemove = (e, type) => {
+
     stateMap[type].set(stateMap[type].get.filter(experience => experience!= stateMap[type].get[e.target.parentElement.getAttribute('data-id')]))
   }
-  const handleChange = (e, type='education') => {
+  const handleChange = (e, type) => {
     const newExperiences = [...stateMap[type].get]
-    // if (!newExperiences[e.target.getAttribute('data-id')]) {
-    //   newExperiences[e.target.getAttribute('data-id')]={};
-    // }
+
   
     newExperiences[e.target.getAttribute('data-id')][e.target.name] = e.target.value;
   
@@ -62,15 +60,33 @@ function App() {
   return (
     <>
     <div className='forms block'>
-      <Education 
+
+    <Section 
+      type={'general'}
+      experiences={generalExperiences} 
+      handleAdd={handleAdd} 
+      handleRemove={handleRemove} 
+      handleChange={handleChange}
+      ></Section>
+      <Section 
+      type={'education'}
       experiences={educationExperiences} 
       handleAdd={handleAdd} 
       handleRemove={handleRemove} 
       handleChange={handleChange}
-      ></Education>
+      ></Section>
+      <Section 
+      type={'practical'}
+      experiences={practicalExperiences} 
+      handleAdd={handleAdd} 
+      handleRemove={handleRemove} 
+      handleChange={handleChange}
+      ></Section>
     </div>
     <div className='results block'>
-      <Resume experiences={educationExperiences}/>
+      <Resume title='General Experiences' experiences={generalExperiences}/>
+      <Resume title='Education' experiences={educationExperiences}/>
+      <Resume title='Practical Experiences' experiences={practicalExperiences}/>
     </div>
       
     </>

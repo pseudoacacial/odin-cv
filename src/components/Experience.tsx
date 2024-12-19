@@ -5,11 +5,13 @@ export const Experience = ({
   fields = [],
   handleChange,
   handleRemove,
+  type
 }: {
   id: number;
   fields: {};
   handleChange: (Event) => void;
   handleRemove: (Event) => void;
+  type: string
 }) => {
   return (
     <div className="experience" data-id={id}>
@@ -20,11 +22,11 @@ export const Experience = ({
             data-id={id}
             name={field}
             value={fields[field]}
-            onChange={handleChange}
+            onChange={(e) => {handleChange(e, type)}}
           ></input>
         </div>
       ))}
-      <button onClick={handleRemove}>remove</button>
+      <button onClick={(e) => {handleRemove(e, type)}}>remove</button>
     </div>
   );
 };
