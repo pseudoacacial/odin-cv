@@ -32,9 +32,9 @@ export const Education = () => {
     
   }
   const handleRemove = (e) => {
-    const newExperiences = {...experiences}
+    const newExperiences = [...experiences]
     delete newExperiences[e.target.parentElement.getAttribute('data-id')]
-    setExperiences(newExperiences)
+    setExperiences(experiences.filter(experience => experience!= experiences[e.target.parentElement.getAttribute('data-id')]))
   }
   const handleChange = (e) => {
     const newExperiences = [...experiences]
