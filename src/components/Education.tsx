@@ -1,17 +1,11 @@
-import React, { useState } from 'react'
+
+import React from 'react'
 import { Experience } from './Experience'
 
-const initialExperiences ={
-  'education': {
-    'school name': '',
-    'title of study': '',
-    'date of study': ''
-  }
-}
+
 
 // ````````````
 //todo:
-// move state up
 // ?change Education into Section Component, with new props title and initialExperiences?
 // `````````````
 
@@ -21,31 +15,12 @@ const initialExperiences ={
 //   'practical experience': ['company name', 'position title', 'main responsibilities', 'starting date', 'end date']
 // }
 
-export const Education = () => {
+export const Education = ({experiences, handleAdd, handleRemove, handleChange}) => {
 
-  const [experiences, setExperiences] = useState([{...initialExperiences.education}])
 
   console.log(experiences)
 
-  const handleAdd = (e) => {
-    setExperiences([...experiences, {...initialExperiences.education}])
-    
-  }
-  const handleRemove = (e) => {
-    const newExperiences = [...experiences]
-    delete newExperiences[e.target.parentElement.getAttribute('data-id')]
-    setExperiences(experiences.filter(experience => experience!= experiences[e.target.parentElement.getAttribute('data-id')]))
-  }
-  const handleChange = (e) => {
-    const newExperiences = [...experiences]
-    // if (!newExperiences[e.target.getAttribute('data-id')]) {
-    //   newExperiences[e.target.getAttribute('data-id')]={};
-    // }
 
-    newExperiences[e.target.getAttribute('data-id')][e.target.name] = e.target.value;
-
-    setExperiences(newExperiences)
-  }
 
   return (
     <div className='education form'>
